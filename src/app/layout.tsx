@@ -1,8 +1,8 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import React from "react";
-import { SidebarProvider, SidebarTrigger } from "@shadcn/sidebar";
-import Sidebar from "@components/Sidebar";
+import Providers from "@components/Providers";
+import { Metadata } from "next";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -13,22 +13,21 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
+
+export const metadata: Metadata = {
+  title: "BurgerBoi",
+  description: "Tracking burgers for the bois",
+};
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <SidebarProvider>
-      <html lang="en">
-        <body className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-row`}>
-          <Sidebar />
-          <main className="w-full flex p-4">
-            <SidebarTrigger />
-            {children}
-          </main>
-        </body>
-      </html>
-    </SidebarProvider>
+    <html lang="en">
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-row`}>
+        <Providers>{children}</Providers>
+      </body>
+    </html>
   );
 }
