@@ -64,7 +64,6 @@ export type AthleteProfile = {
 
 const Athlete = ({ athlete }: { athlete: AthleteProfile }) => {
   if (!athlete) return null;
-  console.log(athlete);
 
   return (
     <div className="flex flex-col gap-y-4 text-gray-700 break-words w-full">
