@@ -50,3 +50,20 @@ export async function refreshStravaToken(refreshToken: string) {
 
   return await response.json();
 }
+
+export async function getStravaData(endpoint: string, token: string) {
+  const url = `${process.env.NEXT_PUBLIC_STRAVA_BASE_URI}/${endpoint}`;
+
+  const res = await fetch(url, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!res.ok) {
+    throw new Error(`Failed to fetch: ${res.status} ${res.statusText}`);
+  }
+
+  const json = await res.json();
+  return json;
+}

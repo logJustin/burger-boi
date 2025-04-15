@@ -8,14 +8,14 @@ interface StravaTokenContextType {
   token: string | null;
   expiresAt: number | null;
   isLoading: boolean;
-  athlete: AthleteProfile | null;
+  athleteID: AthleteProfile["id"] | null;
 }
 
 const StravaTokenContext = createContext<StravaTokenContextType>({
   token: null,
   expiresAt: null,
   isLoading: true,
-  athlete: null,
+  athleteID: null,
 });
 
 export const useStravaToken = () => useContext(StravaTokenContext);
@@ -23,7 +23,7 @@ export const useStravaToken = () => useContext(StravaTokenContext);
 export const StravaTokenProvider = ({ children }: { children: React.ReactNode }) => {
   const [token, setToken] = useState<string | null>(null);
   const [expiresAt, setExpiresAt] = useState<number | null>(null);
-  const [athlete, setAthlete] = useState<AthleteProfile | null>(null);
+  const [athleteID, setAthleteID] = useState<AthleteProfile["id"] | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -33,7 +33,7 @@ export const StravaTokenProvider = ({ children }: { children: React.ReactNode })
 
       const localToken = localStorage.getItem("strava_token");
       const localExpiresAt = localStorage.getItem("strava_expires_at");
-      const localAthlete = localStorage.getItem("strava_athlete");
+      const localAthleteID = localStorage.getItem("strava_athlete_id");
       const localRefreshToken = localStorage.getItem("strava_refresh_token");
 
       const now = Math.floor(Date.now() / 1000);
@@ -44,7 +44,7 @@ export const StravaTokenProvider = ({ children }: { children: React.ReactNode })
         if (expires > now) {
           setToken(localToken);
           setExpiresAt(expires);
-          setAthlete(localAthlete ? JSON.parse(localAthlete) : null);
+          setAthleteID(Number(localAthleteID));
           setIsLoading(false);
           return;
         } else {
@@ -54,11 +54,11 @@ export const StravaTokenProvider = ({ children }: { children: React.ReactNode })
 
             setToken(refreshed.access_token);
             setExpiresAt(refreshed.expires_at);
-            setAthlete(refreshed.athlete);
+            setAthleteID(refreshed.athlete.id);
 
             localStorage.setItem("strava_token", refreshed.access_token);
             localStorage.setItem("strava_expires_at", refreshed.expires_at.toString());
-            localStorage.setItem("strava_athlete", JSON.stringify(refreshed.athlete));
+            localStorage.setItem("strava_athlete_id", JSON.stringify(refreshed.athlete.id));
             localStorage.setItem("strava_refresh_token", refreshed.refresh_token);
 
             setIsLoading(false);
@@ -86,11 +86,11 @@ export const StravaTokenProvider = ({ children }: { children: React.ReactNode })
 
         setToken(data.access_token);
         setExpiresAt(data.expires_at);
-        setAthlete(data.athlete);
+        setAthleteID(data.athlete.id);
 
         localStorage.setItem("strava_token", data.access_token);
         localStorage.setItem("strava_expires_at", data.expires_at.toString());
-        localStorage.setItem("strava_athlete", JSON.stringify(data.athlete));
+        localStorage.setItem("strava_athlete", JSON.stringify(data.athlete.id));
         localStorage.setItem("strava_refresh_token", data.refresh_token);
 
         sessionStorage.removeItem("strava_code");
@@ -109,7 +109,7 @@ export const StravaTokenProvider = ({ children }: { children: React.ReactNode })
   }, []);
 
   return (
-    <StravaTokenContext.Provider value={{ token, expiresAt, isLoading, athlete }}>
+    <StravaTokenContext.Provider value={{ token, expiresAt, isLoading, athleteID }}>
       {children}
     </StravaTokenContext.Provider>
   );

@@ -25,6 +25,7 @@ export default function Sidebar() {
   const pages = [
     { text: "Home", link: "/" },
     { text: "Charts", link: "/charts" },
+    { text: "Activities", link: "/activities" },
   ];
 
   return (
@@ -36,7 +37,7 @@ export default function Sidebar() {
             {pages.map((page) => {
               return (
                 <SidebarMenuSubItem onClick={() => router.push(page.link)} key={page.text}>
-                  <SidebarMenuSubButton>{page.text}</SidebarMenuSubButton>
+                  <SidebarMenuSubButton className="cursor-pointer">{page.text}</SidebarMenuSubButton>
                 </SidebarMenuSubItem>
               );
             })}

@@ -1,10 +1,10 @@
 "use client";
 
 import { useStravaToken } from "@/components/contexts/strava-context";
-import Image from "next/image";
+// import Image from "next/image";
 
 export default function Charts() {
-  const { token, expiresAt, isLoading, athlete } = useStravaToken();
+  const { token, expiresAt, isLoading, athleteID } = useStravaToken();
   const currentDate = new Date();
   const newTime = new Date(currentDate.getTime() + expiresAt!);
 
@@ -33,7 +33,8 @@ export default function Charts() {
           {lorem}
           {lorem}
         </div>
-        <Athlete athlete={athlete as AthleteProfile} />
+        <div>{athleteID}</div>
+        {/* <Athlete athlete={athleteID as AthleteProfile['id']} /> */}
       </div>
     </div>
   );
@@ -62,31 +63,31 @@ export type AthleteProfile = {
   follower: null; // same here
 };
 
-const Athlete = ({ athlete }: { athlete: AthleteProfile }) => {
-  if (!athlete) return null;
+// const Athlete = ({ athlete }: { athlete: AthleteProfile }) => {
+//   if (!athlete) return null;
 
-  return (
-    <div className="flex flex-col gap-y-4 text-gray-700 break-words w-full">
-      <div className="flex gap-x-4 justify-between w-full">
-        <Image
-          className="bg-blue-200 rounded-md p-0.5"
-          src={"/Moth.png"}
-          width={500}
-          height={500}
-          alt="Picture of the author"
-        />
-        <div className="text-4xl text-center w-full font-medium p-4 bg-blue-200 rounded-md">
-          Name: {athlete.firstname}
-          <br />
-          since {athlete.created_at.slice(0, 4)}
-        </div>
-      </div>
-      <div className="p-4 bg-blue-200 rounded-md">
-        Location: {athlete.city || "N/A"}, {athlete.state || "N/A"}
-      </div>
-      <div className="p-4 bg-blue-200 rounded-md">Bio: {athlete.bio || "N/A"}</div>
-      <div className="p-4 bg-blue-200 rounded-md">Profile: {athlete.profile || "N/A"}</div>
-      <div className="p-4 bg-blue-200 rounded-md">Weight: {Math.floor(athlete.weight / 0.4536) || "N/A"} lbs.</div>
-    </div>
-  );
-};
+//   return (
+//     <div className="flex flex-col gap-y-4 text-gray-700 break-words w-full">
+//       <div className="flex gap-x-4 justify-between w-full">
+//         <Image
+//           className="bg-blue-200 rounded-md p-0.5"
+//           src={"/Moth.png"}
+//           width={500}
+//           height={500}
+//           alt="Picture of the author"
+//         />
+//         <div className="text-4xl text-center w-full font-medium p-4 bg-blue-200 rounded-md">
+//           Name: {athlete.firstname}
+//           <br />
+//           since {athlete.created_at.slice(0, 4)}
+//         </div>
+//       </div>
+//       <div className="p-4 bg-blue-200 rounded-md">
+//         Location: {athlete.city || "N/A"}, {athlete.state || "N/A"}
+//       </div>
+//       <div className="p-4 bg-blue-200 rounded-md">Bio: {athlete.bio || "N/A"}</div>
+//       <div className="p-4 bg-blue-200 rounded-md">Profile: {athlete.profile || "N/A"}</div>
+//       <div className="p-4 bg-blue-200 rounded-md">Weight: {Math.floor(athlete.weight / 0.4536) || "N/A"} lbs.</div>
+//     </div>
+//   );
+// };
