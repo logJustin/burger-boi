@@ -3,14 +3,14 @@
 import { addBurger } from "@/app/actions/add-burger";
 import { useStravaToken } from "@/components/contexts/strava-context";
 import { createClient } from "@/utils/supabase/client";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 // import Image from "next/image";
 
 export default function Charts() {
   const { token, expiresAt, isLoading, athleteID } = useStravaToken();
-  const [data, setData] = useState(null);
   const currentDate = new Date();
   const newTime = new Date(currentDate.getTime() + expiresAt!);
+
   const supabase = createClient();
 
   useEffect(() => {
@@ -18,7 +18,6 @@ export default function Charts() {
       .from("test")
       .select()
       .then(({ data }) => {
-        setData(data);
         console.log("from client", data);
       });
   }, [supabase]);
@@ -45,12 +44,7 @@ export default function Charts() {
       <div className="flex flex-wrap gap-y-4 gap-x-4 max-w-full">
         <div className="p-4 bg-blue-200 text-gray-700 break-words rounded">Token: {token}</div>
         <div className="p-4 bg-blue-200 text-gray-700 break-words rounded">expiresAt: {newTime.toUTCString()}</div>
-        <div className="p-4 bg-blue-200 text-gray-700 break-words rounded">
-          {lorem}
-          {lorem}
-          {lorem}
-        </div>
-        <div>Athlete Id: {athleteID}</div>
+        <div className="p-4 bg-blue-200 text-gray-700 break-words rounded">Athlete Id: {athleteID}</div>
         <button
           className="px-4 py-2 cursor-pointer bg-gray-200 text-gray-700 break-words rounded"
           onClick={handleSubmit}
