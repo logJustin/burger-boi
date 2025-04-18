@@ -54,16 +54,21 @@ export async function refreshStravaToken(refreshToken: string) {
 export async function getStravaData(endpoint: string, token: string) {
   const url = `${process.env.NEXT_PUBLIC_STRAVA_BASE_URI}/${endpoint}`;
 
-  const res = await fetch(url, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  try {
+    const res = await fetch(url, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
-  if (!res.ok) {
-    throw new Error(`Failed to fetch: ${res.status} ${res.statusText}`);
+    if (!res.ok) {
+      const errorText = await res.text(); // useful for debugging
+      throw new Error(`Fetch failed: ${res.status} ${res.statusText} - ${errorText}`);
+    }
+
+    return await res.json();
+  } catch (error) {
+    console.error("Strava API error:", error);
+    throw error; // rethrow for upstream handling
   }
-
-  const json = await res.json();
-  return json;
 }

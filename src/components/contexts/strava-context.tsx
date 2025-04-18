@@ -90,7 +90,7 @@ export const StravaTokenProvider = ({ children }: { children: React.ReactNode })
 
         localStorage.setItem("strava_token", data.access_token);
         localStorage.setItem("strava_expires_at", data.expires_at.toString());
-        localStorage.setItem("strava_athlete", JSON.stringify(data.athlete.id));
+        localStorage.setItem("strava_athlete_id", JSON.stringify(data.athlete.id));
         localStorage.setItem("strava_refresh_token", data.refresh_token);
 
         sessionStorage.removeItem("strava_code");
