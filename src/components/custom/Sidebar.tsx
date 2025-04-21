@@ -24,6 +24,7 @@ export default function Sidebar() {
 
   const pages = [
     { text: "Home", link: "/" },
+    { text: "Burgers", link: "/burgers" },
     { text: "Charts", link: "/charts" },
     { text: "Activities", link: "/activities" },
   ];
