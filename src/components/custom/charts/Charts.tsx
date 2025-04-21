@@ -1,10 +1,9 @@
 "use client";
 
-import { addBurger } from "@/app/actions/add-burger";
+import { addBurger } from "@/server/actions/add-burger";
 import { useStravaToken } from "@/components/contexts/strava-context";
 import { createClient } from "@/utils/supabase/client";
 import { useEffect } from "react";
-// import Image from "next/image";
 
 export default function Charts() {
   const { token, expiresAt, isLoading, athleteID } = useStravaToken();
