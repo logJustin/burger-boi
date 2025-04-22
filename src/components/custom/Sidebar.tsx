@@ -13,6 +13,7 @@ import { Switch } from "@shadcn/switch";
 import { useTheme } from "next-themes";
 import { MdDarkMode, MdLightMode } from "react-icons/md";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 export default function Sidebar() {
   const { resolvedTheme, setTheme } = useTheme();
@@ -23,25 +24,32 @@ export default function Sidebar() {
   };
 
   const pages = [
-    { text: "Home", link: "/" },
-    { text: "Burgers", link: "/burgers" },
-    { text: "Charts", link: "/charts" },
-    { text: "Activities", link: "/activities" },
+    { text: "Home", link: "/", featureReady: true },
+    { text: "Activities", link: "/activities", featureReady: true },
+    { text: "Burgers", link: "/burgers", featureReady: true },
+    { text: "Charts", link: "/charts", featureReady: false },
   ];
 
   return (
     <ShadcnSidebar>
       <SidebarMenu className="p-4">
         <SidebarMenuItem>
-          <SidebarMenuButton>Pages</SidebarMenuButton>
+          <SidebarMenuButton
+            onClick={() => router.push(pages[0].link)}
+            className="font-medium text-lg hover:bg-transparent hover:text-inherit focus:bg-transparent focus:text-inherit active:bg-transparent active:text-inherit cursor-auto"
+          >
+            <Image src="/burger.ico" alt="Burger Icon" width={16} height={16} />
+            Burger Boi
+          </SidebarMenuButton>
           <SidebarMenuSub>
-            {pages.map((page) => {
-              return (
-                <SidebarMenuSubItem onClick={() => router.push(page.link)} key={page.text}>
-                  <SidebarMenuSubButton className="cursor-pointer">{page.text}</SidebarMenuSubButton>
-                </SidebarMenuSubItem>
-              );
-            })}
+            {pages.map(
+              (page) =>
+                page.featureReady && (
+                  <SidebarMenuSubItem onClick={() => router.push(page.link)} key={page.text}>
+                    <SidebarMenuSubButton className="cursor-pointer">{page.text}</SidebarMenuSubButton>
+                  </SidebarMenuSubItem>
+                ),
+            )}
           </SidebarMenuSub>
         </SidebarMenuItem>
       </SidebarMenu>
