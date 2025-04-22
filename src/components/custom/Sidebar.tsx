@@ -12,19 +12,18 @@ import {
 import { Switch } from "@shadcn/switch";
 import { useTheme } from "next-themes";
 import { MdDarkMode, MdLightMode } from "react-icons/md";
-import { useRouter } from "next/navigation";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Sidebar() {
   const { resolvedTheme, setTheme } = useTheme();
-  const router = useRouter();
 
   const toggleTheme = () => {
     setTheme(resolvedTheme === "dark" ? "light" : "dark");
   };
 
   const pages = [
-    { text: "Home", link: "/", featureReady: true },
+    { text: "Home", link: "/", featureReady: false },
     { text: "Activities", link: "/activities", featureReady: true },
     { text: "Burgers", link: "/burgers", featureReady: true },
     { text: "Charts", link: "/charts", featureReady: false },
@@ -32,22 +31,25 @@ export default function Sidebar() {
 
   return (
     <ShadcnSidebar>
-      <SidebarMenu className="p-4">
+      <SidebarMenu className="p-4 pt-2">
         <SidebarMenuItem>
-          <SidebarMenuButton
-            onClick={() => router.push(pages[0].link)}
-            className="font-medium text-lg hover:bg-transparent hover:text-inherit focus:bg-transparent focus:text-inherit active:bg-transparent active:text-inherit cursor-auto"
-          >
-            <Image src="/burger.ico" alt="Burger Icon" width={16} height={16} />
-            Burger Boi
-          </SidebarMenuButton>
+          <Link href={pages[0].link}>
+            <SidebarMenuButton className="font-medium text-lg hover:bg-transparent hover:text-inherit focus:bg-transparent focus:text-inherit active:bg-transparent active:text-inherit cursor-auto">
+              <Image src="/burger.ico" alt="Burger Icon" width={16} height={16} />
+              Burger Boi
+            </SidebarMenuButton>
+          </Link>
           <SidebarMenuSub>
             {pages.map(
               (page) =>
                 page.featureReady && (
-                  <SidebarMenuSubItem onClick={() => router.push(page.link)} key={page.text}>
-                    <SidebarMenuSubButton className="cursor-pointer">{page.text}</SidebarMenuSubButton>
-                  </SidebarMenuSubItem>
+                  <Link href={page.link} key={page.text} passHref>
+                    <SidebarMenuSubItem>
+                      <SidebarMenuSubButton asChild>
+                        <span className="cursor-pointer">{page.text}</span>
+                      </SidebarMenuSubButton>
+                    </SidebarMenuSubItem>
+                  </Link>
                 ),
             )}
           </SidebarMenuSub>
