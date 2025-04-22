@@ -4,7 +4,7 @@ import React from "react";
 import Providers from "@components/Providers";
 import { Metadata } from "next";
 import Sidebar from "@components/Sidebar";
-import { SidebarTrigger } from "@shadcn/sidebar";
+import Navbar from "@/components/custom/Navbar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,9 +30,9 @@ export default function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-row`}>
         <Providers>
           <Sidebar />
-          <div className="w-full flex-col flex p-4">
-            <SidebarTrigger className="mb-4" />
-            {children}
+          <div className="flex flex-col w-full">
+            <Navbar />
+            <div className="h-full p-4">{children}</div>
           </div>
         </Providers>
       </body>
