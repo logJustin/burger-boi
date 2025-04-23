@@ -8,6 +8,7 @@ import {
   SidebarMenuSub,
   SidebarMenuSubButton,
   SidebarMenuSubItem,
+  useSidebar,
 } from "@shadcn/sidebar";
 import { Switch } from "@shadcn/switch";
 import { useTheme } from "next-themes";
@@ -17,6 +18,7 @@ import Link from "next/link";
 
 export default function Sidebar() {
   const { resolvedTheme, setTheme } = useTheme();
+  const { toggleSidebar } = useSidebar();
 
   const toggleTheme = () => {
     setTheme(resolvedTheme === "dark" ? "light" : "dark");
@@ -34,7 +36,10 @@ export default function Sidebar() {
       <SidebarMenu className="p-4 pt-2">
         <SidebarMenuItem>
           <Link href={pages[0].link}>
-            <SidebarMenuButton className="font-medium text-lg hover:bg-transparent hover:text-inherit focus:bg-transparent focus:text-inherit active:bg-transparent active:text-inherit cursor-auto">
+            <SidebarMenuButton
+              onClick={toggleSidebar}
+              className="font-medium text-lg hover:bg-transparent hover:text-inherit focus:bg-transparent focus:text-inherit active:bg-transparent active:text-inherit cursor-auto"
+            >
               <Image src="/burger.ico" alt="Burger Icon" width={16} height={16} />
               Burger Boi
             </SidebarMenuButton>
@@ -45,7 +50,7 @@ export default function Sidebar() {
                 page.featureReady && (
                   <Link href={page.link} key={page.text} passHref>
                     <SidebarMenuSubItem>
-                      <SidebarMenuSubButton asChild>
+                      <SidebarMenuSubButton onClick={toggleSidebar} asChild>
                         <span className="cursor-pointer">{page.text}</span>
                       </SidebarMenuSubButton>
                     </SidebarMenuSubItem>
