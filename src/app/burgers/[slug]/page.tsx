@@ -1,9 +1,4 @@
-type Props = {
-  params: {
-    slug: string;
-  };
-};
-
-export default function Page({ params }: Props) {
-  return <p>The Burger ID is {params.slug}</p>;
+export default async function Page({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  return <p>The Burger ID is {slug}</p>;
 }
