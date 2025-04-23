@@ -1,8 +1,9 @@
 "use client";
 
+import { Burger } from "@/types/components/burgers";
 import { useRouter } from "next/navigation";
 
-export default function BurgerGrid({ burgers }: { burgers: any[] }) {
+export default function BurgerGrid({ burgers }: { burgers: Burger[] }) {
   const router = useRouter();
 
   if (!burgers.length) return <div>Loading...</div>;
