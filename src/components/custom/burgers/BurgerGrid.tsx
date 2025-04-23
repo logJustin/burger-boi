@@ -1,12 +1,18 @@
 "use client";
 
-import { Burger } from "@/types/components/burgers";
+import Spinner from "@/components/custom/Spinner";
 import { useRouter } from "next/navigation";
+
+export type Burger = {
+  id: number;
+  type: string;
+  created_at: Date;
+};
 
 export default function BurgerGrid({ burgers }: { burgers: Burger[] }) {
   const router = useRouter();
 
-  if (!burgers.length) return <div>Loading...</div>;
+  if (!burgers.length) return <Spinner />;
 
   return (
     <div className="w-full gap-x-4 gap-y-4 flex flex-wrap">
