@@ -4,7 +4,7 @@ import React from "react";
 import Providers from "@components/Providers";
 import { Metadata } from "next";
 import Sidebar from "@components/Sidebar";
-import Navbar from "@/components/custom/navbar/Navbar";
+import Navbar from "@/components/custom/Navbar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
