@@ -1,4 +1,4 @@
-import AddBurgersModal from "@/components/custom/burgers/AddBurgersModal";
+import AddBurgerModal from "@/components/custom/burgers/AddBurgersModal";
 import BurgerGrid from "@/components/custom/burgers/BurgerGrid";
 import { createClient } from "@/utils/supabase/server";
 
@@ -7,16 +7,23 @@ export default async function Page() {
   const { data: burgers } = await supabase.from("test").select();
 
   return (
-    <div className="w-full h-full flex flex-col gap-y-6">
-      <div className="flex w-full items-center justify-between">
-        <div className="flex items-center gap-x-2">
-          <div className="text-5xl">🍔</div>
-          <div className="text-5xl font-bold text-white tracking-tight">Burger Boi’s Finest</div>
+    <div className="flex justify-center px-4 md:px-8 lg:px-0 w-full min-h-screen">
+      <div className="w-full max-w-4xl flex flex-col gap-y-6">
+        <div className="flex w-full items-center justify-between">
+          <Header />
+          <AddBurgerModal />
         </div>
-        <AddBurgersModal />
+        <BurgerGrid burgers={burgers || []} />
       </div>
+    </div>
+  );
+}
 
-      <BurgerGrid burgers={burgers || []} />
+function Header() {
+  return (
+    <div className="flex items-center gap-x-2">
+      <div className="text-xl sm:text-3xl md:text-4xl">🍔</div>
+      <div className="text-xl sm:text-3xl md:text-4xl font-bold text-white tracking-tight">Burger Boi’s Finest</div>
     </div>
   );
 }
