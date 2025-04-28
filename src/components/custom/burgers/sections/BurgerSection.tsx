@@ -1,11 +1,12 @@
 "use client";
+
 import { useState } from "react";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
 import { Slider } from "@/components/ui/slider";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Separator } from "@/components/ui/separator";
+import { BurgerSelect } from "@/components/custom/burgers/BurgerSelect";
 
 const bunTypes = ["Sesame", "Potato", "Brioche", "Lettuce Wrap", "No Bun"];
 const pattyCooks = ["Rare", "Medium Rare", "Medium", "Medium Well", "Well Done"];
@@ -32,13 +33,19 @@ export function BurgerSection() {
   const [selectedToppings, setSelectedToppings] = useState<string[]>([]);
   const [selectedSetup, setSelectedSetup] = useState<string[]>([]);
   const [selectedCondiments, setSelectedCondiments] = useState<string[]>([]);
+  const [selectedLocation, setSelectedLocation] = useState<string>("");
+  const [openSelect, setOpenSelect] = useState<"bun" | "patty" | null>(null);
 
   const toggleSelection = (item: string, list: string[], setList: (val: string[]) => void) => {
     setList(list.includes(item) ? list.filter((i) => i !== item) : [...list, item]);
   };
 
+  const handleSubmit = () => {
+    console.log("location", selectedLocation);
+  };
+
   return (
-    <div className="space-y-6 overflow-scroll max-h-[90%]">
+    <div className="space-y-6 p-2 overflow-scroll max-h-[90%]">
       {/* Burger Rating */}
       <div className="space-y-2">
         <Label>Burger Rating (1–10)</Label>
@@ -48,38 +55,23 @@ export function BurgerSection() {
 
       <Separator />
 
-      {/* Bun Type */}
-      <div className="space-y-2">
-        <Label htmlFor="bun">Bun Type</Label>
-        <Select>
-          <SelectTrigger>
-            <SelectValue placeholder="Choose bun type" />
-          </SelectTrigger>
-          <SelectContent>
-            {bunTypes.map((bun) => (
-              <SelectItem key={bun} value={bun}>
-                {bun}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div>
-
-      {/* Patty Cook */}
-      <div className="space-y-2">
-        <Label htmlFor="patty">Patty Cook Level</Label>
-        <Select>
-          <SelectTrigger>
-            <SelectValue placeholder="How was it cooked?" />
-          </SelectTrigger>
-          <SelectContent>
-            {pattyCooks.map((cook) => (
-              <SelectItem key={cook} value={cook}>
-                {cook}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+      <div className="grid grid-cols-2 gap-x-2">
+        <BurgerSelect
+          id="bun"
+          label="Bun Type"
+          placeholder="Choose bun type"
+          openSelect={openSelect}
+          setOpenSelect={setOpenSelect}
+          options={bunTypes}
+        />
+        <BurgerSelect
+          id="patty"
+          label="Patty Cook Level"
+          placeholder="How was it cooked?"
+          openSelect={openSelect}
+          setOpenSelect={setOpenSelect}
+          options={pattyCooks}
+        />
       </div>
 
       {/* Toppings */}
@@ -144,7 +136,11 @@ export function BurgerSection() {
       {/* Business Input */}
       <div className="space-y-2">
         <Label htmlFor="business">Business / Location</Label>
-        <Textarea id="business" placeholder="Where'd you get it?" />
+        <Textarea
+          onChange={(e) => setSelectedLocation(e.target.value)}
+          id="business"
+          placeholder="Where'd you get it?"
+        />
       </div>
     </div>
   );
