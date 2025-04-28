@@ -20,22 +20,22 @@ export default function AddBurgerModal() {
         </Button>
       </DialogTrigger>
 
-      <DialogContent className="h-[80vh] min-w-[398px]">
+      <DialogContent className="h-[80vh] min-w-[398px] flex flex-col">
         {/* header */}
         <DialogHeader className="shrink-0">
           <DialogTitle>Add a Burger</DialogTitle>
           <DialogDescription>Tell us about the setup, flavor, and cost.</DialogDescription>
         </DialogHeader>
 
-        <div className="flex-grow overflow-y-auto">
-          <Tabs defaultValue="burger" className="w-full">
-            <TabsList className="grid w-full grid-cols-3 bg-background border-border sticky top-0 z-10">
-              <TabsTrigger value="burger">Burger</TabsTrigger>
-              <TabsTrigger value="fries">Fries</TabsTrigger>
-              <TabsTrigger value="cost">Cost</TabsTrigger>
-            </TabsList>
+        <Tabs defaultValue="burger" className="w-full flex flex-col flex-grow overflow-hidden">
+          <TabsList className="grid w-full grid-cols-3 bg-background border-border z-10 shrink-0">
+            <TabsTrigger value="burger">Burger</TabsTrigger>
+            <TabsTrigger value="fries">Fries</TabsTrigger>
+            <TabsTrigger value="cost">Cost</TabsTrigger>
+          </TabsList>
 
-            {/* body */}
+          {/* body */}
+          <div className="flex-grow overflow-y-auto">
             <TabsContent value="burger" className="pt-4">
               <BurgerSection />
             </TabsContent>
@@ -45,8 +45,8 @@ export default function AddBurgerModal() {
             <TabsContent value="cost" className="pt-4 pb-24">
               <p className="text-muted-foreground">Coming soon: Track the price 💵</p>
             </TabsContent>
-          </Tabs>
-        </div>
+          </div>
+        </Tabs>
 
         {/* footer */}
         <div className="border-t pt-4 shrink-0">
