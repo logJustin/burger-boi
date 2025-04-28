@@ -9,14 +9,18 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { IoMdAddCircle } from "react-icons/io";
 
-export default function AddBurgersModal() {
+export default function AddBurgerModal() {
   return (
     <Dialog>
-      <DialogTrigger>
-        <Button className="bg-foreground">Add Burger</Button>
+      <DialogTrigger asChild>
+        <Button className="bg-foreground">
+          <IoMdAddCircle /> Add Burger
+        </Button>
       </DialogTrigger>
-      <DialogContent className="flex h-[80vh] flex-col">
+
+      <DialogContent className="h-[80vh] min-w-[398px]">
         {/* header */}
         <DialogHeader className="shrink-0">
           <DialogTitle>Add a Burger</DialogTitle>
@@ -26,15 +30,9 @@ export default function AddBurgersModal() {
         <div className="flex-grow overflow-y-auto">
           <Tabs defaultValue="burger" className="w-full">
             <TabsList className="grid w-full grid-cols-3 bg-background border-border sticky top-0 z-10">
-              <TabsTrigger className="cursor-pointer" value="burger">
-                Burger
-              </TabsTrigger>
-              <TabsTrigger className="cursor-pointer" value="fries">
-                Fries
-              </TabsTrigger>
-              <TabsTrigger className="cursor-pointer" value="cost">
-                Cost
-              </TabsTrigger>
+              <TabsTrigger value="burger">Burger</TabsTrigger>
+              <TabsTrigger value="fries">Fries</TabsTrigger>
+              <TabsTrigger value="cost">Cost</TabsTrigger>
             </TabsList>
 
             {/* body */}
