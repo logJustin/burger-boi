@@ -3,10 +3,10 @@
 import { useEffect, useState } from "react";
 import { Avatar as ShadcnAvatar, AvatarImage, AvatarFallback } from "@radix-ui/react-avatar";
 import { getStravaData } from "@/hooks/use-strava-data";
-import { useStravaToken } from "@/components/contexts/strava-context";
+import { useStravaAuthState } from "@/components/contexts/strava-context";
 
 export default function Avatar() {
-  const { token } = useStravaToken();
+  const { token } = useStravaAuthState();
   const [profilePhoto, setProfilePhoto] = useState<string | null>(null);
 
   useEffect(() => {

@@ -56,29 +56,6 @@ export default function Charts() {
   );
 }
 
-export type AthleteProfile = {
-  id: number;
-  username: string | null;
-  resource_state: number;
-  firstname: string;
-  lastname: string;
-  bio: string;
-  city: string;
-  state: string;
-  country: string;
-  sex: "M" | "F" | string; // You can narrow this down further if needed
-  premium: boolean;
-  summit: boolean;
-  created_at: string; // ISO date string
-  updated_at: string; // ISO date string
-  badge_type_id: number;
-  weight: number;
-  profile_medium: string;
-  profile: string;
-  friend: null; // can be typed better if you know its shape
-  follower: null; // same here
-};
-
 // const Athlete = ({ athlete }: { athlete: AthleteProfile }) => {
 //   if (!athlete) return null;
 
