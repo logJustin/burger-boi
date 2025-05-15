@@ -70,7 +70,7 @@ export default function Sidebar() {
         <Switch
           checked={resolvedTheme === "dark"}
           onCheckedChange={toggleTheme}
-          className="data-[state=unchecked]:bg-stone-700 data-[state=checked]:bg-stone-700"
+          className="data-[state=unchecked]:bg-stone-700 data-[state=checked]:bg-stone-700 cursor-pointer"
         />
       </div>
     </ShadcnSidebar>
