@@ -46,7 +46,3 @@ function hydrateFromStorage(key: string): string | null {
     return null;
   }
 }
-
-export function numberToDateString(expirationDate: number): string {
-  return new Date(expirationDate * 1000).toISOString();
-}

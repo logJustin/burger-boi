@@ -3,7 +3,6 @@
 import {
   getStravaAuthFromStorage,
   handleCodeExchange,
-  numberToDateString,
   redirectToStravaAuth,
   refreshAuthToken,
   storeStravaAuth,
@@ -44,8 +43,8 @@ const StravaTokenProvider = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     const codeFromStravaRedirect = new URLSearchParams(window.location.search).get("code");
-    const expirationDate = state.expiresAt ? new Date(state.expiresAt) : new Date("1970-01-01T00:00:00Z");
-    const isTokenExpired = new Date() >= expirationDate;
+    const nowInSeconds = Math.floor(Date.now() / 1000);
+    const isTokenExpired = nowInSeconds >= Number(state.expiresAt ?? 0);
 
     if (state.accessToken !== null && !isTokenExpired) {
       dispatch({ type: "update_strava_auth", stravaAuth: { isLoading: false } });
@@ -53,13 +52,17 @@ const StravaTokenProvider = ({ children }: { children: React.ReactNode }) => {
     }
 
     if (state.refreshToken !== null && isTokenExpired) {
-      refreshAuthToken(state.refreshToken).then(({ token, expiresAt }) => {
-        dispatch({
-          type: "update_strava_auth",
-          stravaAuth: { accessToken: token, expiresAt: numberToDateString(expiresAt) },
+      refreshAuthToken(state.refreshToken)
+        .then(({ token, expiresAt }) => {
+          dispatch({
+            type: "update_strava_auth",
+            stravaAuth: { accessToken: token, expiresAt: expiresAt.toString() },
+          });
+        })
+        .catch((error) => {
+          console.error("Token refresh failed", error);
+          redirectToStravaAuth();
         });
-      });
-      return;
     }
 
     if (state.accessToken == null && !codeFromStravaRedirect) {
@@ -75,7 +78,7 @@ const StravaTokenProvider = ({ children }: { children: React.ReactNode }) => {
           stravaAuth: {
             accessToken: data.access_token,
             refreshToken: data.refresh_token,
-            expiresAt: numberToDateString(data.expires_at),
+            expiresAt: data.expires_at.toString(),
             isLoading: false,
             athleteID: data.athleteID,
           },
