@@ -34,6 +34,17 @@ export function BurgerSection() {
 
   return (
     <div className="space-y-6 p-2 overflow-scroll max-h-[90%]">
+      <div className="space-y-2">
+        <Label htmlFor="name">Burger Name</Label>
+        <Textarea
+          onChange={(e) => dispatch(burgerActions.setName(e.target.value))}
+          id="name"
+          placeholder="What's it called?"
+        />
+      </div>
+
+      <Separator />
+
       {/* Burger Rating */}
       <div className="space-y-2">
         <Label>Burger Rating (1–10)</Label>
@@ -68,6 +79,8 @@ export function BurgerSection() {
         />
       </div>
 
+      <Separator />
+
       {/* Toppings */}
       <GenericCheckbox
         title={"Toppings"}
@@ -77,6 +90,8 @@ export function BurgerSection() {
         removeOption={(topping) => dispatch(burgerActions.removeTopping(topping))}
       />
 
+      <Separator />
+
       {/* Setup */}
       <GenericCheckbox
         title={"Setup"}
@@ -85,6 +100,8 @@ export function BurgerSection() {
         addOption={(item) => dispatch(burgerActions.addSetupItem(item))}
         removeOption={(item) => dispatch(burgerActions.removeSetupItem(item))}
       />
+
+      <Separator />
 
       {/* Condiments */}
       <GenericCheckbox

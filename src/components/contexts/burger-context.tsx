@@ -2,6 +2,7 @@ import React, { createContext, useContext, useReducer, ReactNode } from "react";
 
 // Define the types
 export type BurgerState = {
+  name: string;
   rating: number[];
   selectedToppings: string[];
   selectedSetup: string[];
@@ -12,6 +13,7 @@ export type BurgerState = {
 
 // Define action types
 export type BurgerAction =
+  | { type: "SET_NAME"; payload: string }
   | { type: "SET_RATING"; payload: number[] }
   | { type: "SET_TOPPINGS"; payload: string[] }
   | { type: "ADD_TOPPING"; payload: string }
@@ -37,6 +39,7 @@ const BurgerContext = createContext<BurgerContextType | undefined>(undefined);
 
 // Default state
 const defaultBurgerState: BurgerState = {
+  name: "",
   rating: [5],
   selectedToppings: [],
   selectedSetup: [],
@@ -48,6 +51,8 @@ const defaultBurgerState: BurgerState = {
 // Create the reducer function
 const burgerReducer = (state: BurgerState, action: BurgerAction): BurgerState => {
   switch (action.type) {
+    case "SET_NAME":
+      return { ...state, name: action.payload };
     case "SET_RATING":
       return { ...state, rating: action.payload };
 
@@ -128,6 +133,11 @@ export const useBurger = () => {
 
 // Optional: Helper functions to make dispatching actions easier
 export const burgerActions = {
+  setName: (name: string) => ({
+    type: "SET_NAME" as const,
+    payload: name,
+  }),
+
   setRating: (rating: number[]) => ({
     type: "SET_RATING" as const,
     payload: rating,

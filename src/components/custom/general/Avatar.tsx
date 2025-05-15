@@ -6,15 +6,15 @@ import { getStravaData } from "@/hooks/use-strava-data";
 import { useStravaAuthState } from "@/components/contexts/strava-context";
 
 export default function Avatar() {
-  const { token } = useStravaAuthState();
+  const { accessToken } = useStravaAuthState();
   const [profilePhoto, setProfilePhoto] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!token) return;
-    getStravaData("athlete", token).then((athlete) => {
+    if (!accessToken) return;
+    getStravaData("athlete", accessToken).then((athlete) => {
       setProfilePhoto(athlete.profile);
     });
-  }, [token]);
+  }, [accessToken]);
 
   return (
     <ShadcnAvatar className="ml-auto max-h-10 max-w-10">
