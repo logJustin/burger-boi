@@ -12,26 +12,26 @@ function convertMetersToMiles(meters: number): string {
 
 export default function Page() {
   const state = useStravaAuthState();
-  const { token, athleteID, isLoading } = state;
+  const { accessToken, athleteID, isLoading } = state;
   const [activities, setActivities] = useState<StravaActivity[] | null>(null);
   const [profilePhoto, setProfilePhoto] = useState<string>("");
   const [stats, setStats] = useState<AthleteStats | null>();
 
   useEffect(() => {
-    if (!token || athleteID === undefined || athleteID === null) return;
+    if (!accessToken || athleteID === undefined || athleteID === null) return;
 
     const fetchData = async () => {
       const [activities, athlete, stats] = await Promise.all([
-        await getStravaData("athlete/activities", token),
-        await getStravaData("athlete", token),
-        await getStravaData(`athletes/${athleteID}/stats`, token),
+        await getStravaData("athlete/activities", accessToken),
+        await getStravaData("athlete", accessToken),
+        await getStravaData(`athletes/${athleteID}/stats`, accessToken),
       ]);
       setActivities(activities);
       setProfilePhoto(athlete.profile);
       setStats(stats);
     };
     fetchData();
-  }, [token, athleteID]);
+  }, [accessToken, athleteID]);
 
   if (!activities || !stats || isLoading || profilePhoto == "") return <Spinner />;
   console.log(`${convertMetersToMiles(stats.all_ride_totals.distance)} Miles`);
